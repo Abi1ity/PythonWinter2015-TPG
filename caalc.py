@@ -5,6 +5,10 @@ import readline
 import sys
 import tpg
 import itertools
+import rlcompleter
+
+readline.parse_and_bind("tab: complete")
+
 
 def make_op(s):
     return {
@@ -80,6 +84,10 @@ PS1='--> '
 Stop=False
 while not Stop:
     line = raw_input(PS1)
+    if (line == 'exit')or(line == 'quit')or(line == 'q'):  
+        Stop = True
+        print "Stopped"
+        break
     try:
         res = calc(line)
     except tpg.Error as exc:
