@@ -82,16 +82,33 @@ Vars={}
 PS1='--> '
 
 Stop=False
+script = None
+if len(sys.argv) > 1:
+    try:
+        script = open(sys.argv[1])
+    except Exception as e:
+        print >> sys.stderr, e
+        exit()
+
+res = None
 while not Stop:
-    line = raw_input(PS1)
-    if (line == 'exit')or(line == 'quit')or(line == 'q'):  
-        Stop = True
-        print "Stopped"
-        break
+    if script:
+        line = script.readline()
+        if not line:
+            break
+    else:
+        line = raw_input(PS1)
+        if (line == 'exit')or(line == 'quit')or(line == 'q'):  
+            Stop = True
+            print "Stopped"
+            break
     try:
         res = calc(line)
     except tpg.Error as exc:
         print >> sys.stderr, exc
-        res = None
-    if res != None:
-        print res
+        exit()
+    if res != None and not script:
+         print res
+
+if script:
+    print res
