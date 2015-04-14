@@ -62,8 +62,9 @@ class Vector(list):
                 for k in range(1, len(self)):
                     value += self[i][k] * a[k][j]
                 row += [value]
-            res += [Vector(row)]
-        return Vector(res)
+            res += [row]
+        return res
+
 
     def __and__(self, a):
         try:
